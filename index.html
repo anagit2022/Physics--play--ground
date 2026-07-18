@@ -31,9 +31,9 @@
 
             <div class="panel">
                 <h2>Motion</h2>
-                <textarea id="motionInput" class="code-box" rows="4">G0 {AXIS}{A} F{F}
-G0 {AXIS}-{A} F{F}</textarea>
-                <div class="hint">Edit freely. <code>{AXIS}</code> comes from the axis box above (e.g. Y), <code>{A}</code> is the amplitude, <code>{F}</code> is speed — all filled in live.</div>
+                <textarea id="motionInput" class="code-box" rows="4">G0 Y{A} F{F}
+G0 Y-{A} F{F}</textarea>
+                <div class="hint">Edit freely — change the axis letter directly (e.g. Y → X). <code>{A}</code> is amplitude, <code>{F}</code> is speed, both filled in live. The label above updates to match automatically.</div>
                 <div id="motionPreview" class="code-box motion-preview"></div>
                 <div class="hint">Preview: what's actually sent right now</div>
             </div>
@@ -47,7 +47,7 @@ G0 {AXIS}-{A} F{F}</textarea>
                 <div class="panel-header">
                     <h2>Amplitude</h2>
                     <div class="value-box">
-                        <input id="ampAxis" class="axis-input" type="text" value="Y" maxlength="1">
+                        <input id="ampAxis" class="axis-input" type="text" value="Y" maxlength="2" readonly>
                         <input id="ampValue" type="number" value="5" min="0" max="50" step="1">
                     </div>
                 </div>
