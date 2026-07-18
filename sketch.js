@@ -55,31 +55,32 @@ function getValues(){
     };
 }
 
-// reads the Motion textarea and fills in {AXIS} / {A} / {F} with the
-// current axis letter and slider values
+// reads the Motion textarea and fills in {A} / {F} with the current
+// amplitude and speed values
 function buildMotionLines(){
     const template = document.getElementById("motionInput").value.split("\n");
     const { amp, speed } = getValues();
-    const axis = document.getElementById("ampAxis").value.trim().toUpperCase() || "Y";
     return template
         .map(line => line.trim())
         .filter(line => line !== "")
         .map(line => line
-            .replaceAll("{AXIS}", axis)
             .replaceAll("{A}", amp)
             .replaceAll("{F}", speed));
 }
 
+// figures out the axis letter by looking at whatever comes right before
+// the first {A} in the template, e.g. "G0 X{A}" -> "X"
+function updateAxisLabel(){
+    const template = document.getElementById("motionInput").value;
+    const match = template.match(/([A-Za-z])\{A\}/);
+    document.getElementById("ampAxis").value = match ? match[1].toUpperCase() : "?";
+}
+
 function updateMotionPreview(){
+    updateAxisLabel();
     motionPreview.textContent = buildMotionLines().join("\n");
 }
 document.getElementById("motionInput").addEventListener("input", updateMotionPreview);
-
-const ampAxisInput = document.getElementById("ampAxis");
-ampAxisInput.addEventListener("input", () => {
-    ampAxisInput.value = ampAxisInput.value.toUpperCase().slice(0, 1);
-    updateMotionPreview();
-});
 
 updateMotionPreview();
 
